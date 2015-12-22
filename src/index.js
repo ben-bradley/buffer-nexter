@@ -27,12 +27,17 @@ export default class BufferNexter {
       return null;
 
     let end = this._buf.indexOf(this._separator, this._index),
+      value = null;
+
+    if (this._index > 0 && end === -1) {
+      this._done = true;
+      value = this._buf.toString(this._encoding, this._index);
+    } else if (end !== -1) {
       value = this._buf.toString(this._encoding, this._index, end);
+    }
 
     if (!peek)
       this._index = end + 1;
-
-    this._done = (end === -1) ? true : this._done;
 
     return value;
   }

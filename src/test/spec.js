@@ -72,8 +72,9 @@ describe('Buffer Nexter', () => {
     it('should return iterative values', () => {
       let b = new BufferNexter(buf, opts);
 
-      for (let i = 0; i < 5; i++)
-        (b.next()).should.eql(ary[i].toString());
+      ary.forEach((i) => {
+        (b.next()).should.eql('' + i);
+      });
     });
 
     it('should return null when done', () => {

@@ -78,9 +78,9 @@ describe('Buffer Nexter', function () {
     it('should return iterative values', function () {
       var b = new _2['default'](buf, opts);
 
-      for (var i = 0; i < 5; i++) {
-        b.next().should.eql(ary[i].toString());
-      }
+      ary.forEach(function (i) {
+        b.next().should.eql('' + i);
+      });
     });
 
     it('should return null when done', function () {
