@@ -10,11 +10,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _stream = require('stream');
 
+var _util = require('util');
+
+var _fs = require('fs');
+
 var BufferNexter = (function () {
   function BufferNexter(buf) {
     var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
     _classCallCheck(this, BufferNexter);
+
+    if (!(0, _util.isBuffer)(buf) && !(0, _util.isString)(buf)) throw new Error('First argument must be a Buffer or String');
 
     var _options$separator = options.separator;
     var separator = _options$separator === undefined ? '\n' : _options$separator;
@@ -71,6 +77,17 @@ var BufferNexter = (function () {
 
           this.push(null);
         }
+      });
+    }
+  }], [{
+    key: 'readFile',
+    value: function readFile(file, options) {
+      return new Promise(function (resolve, reject) {
+        (0, _fs.readFile)(file, function (err, buf) {
+          if (err) return reject(err);
+
+          resolve(new BufferNexter(buf, options));
+        });
       });
     }
   }]);

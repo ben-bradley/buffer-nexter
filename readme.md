@@ -50,7 +50,7 @@ console.log(buf.next()); // -> null
 ```
 
 
-## Methods
+## Instance Methods
 
 ### `next()`
 
@@ -77,6 +77,49 @@ This returns a `Readable` stream for piping or whatever you want to use a stream
 - Returns: `Stream.Readable`
 
 
+## Static Methods
+
+### `BufferNexter.readFile(file[, options])`
+
+If you just want to read a file and iterate `next()` calls on `\n`, then this is the easiest way to do that.
+
+- Returns: `Promise -> BufferNexter instance`
+
+```javascript
+/* sample.txt
+foo
+bar
+baz
+ */
+
+import { readFile } from 'buffer-nexter';
+
+readFile('sample.txt')
+  .then((buf) => {
+    console.log(buf.next()); // -> foo
+    console.log(buf.next()); // -> bar
+    console.log(buf.next()); // -> baz
+  })
+```
+
+```javascript
+/* sample.csv
+foo,bar,baz
+ */
+
+import { readFile } from 'buffer-nexter';
+
+readFile('sample.csv', { separator: ',' })
+  .then((buf) => {
+    console.log(buf.next()); // -> foo
+    console.log(buf.next()); // -> bar
+    console.log(buf.next()); // -> baz
+  })
+```
+
+What about `readFileSync()`?  If there's a demand for it or if someone submits a PR, I'll add it, but I prefer to use `Promise`s wherever possible.
+
 ## Versions
 
+- 0.1.0 - 20151222 - Added `static readFile()`
 - 0.0.1 - 20151221 - Initial release

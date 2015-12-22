@@ -14,11 +14,50 @@ describe('Buffer Nexter', () => {
 
 
   describe('Class', () => {
+
     it('should return an instance', () => {
       let b = new BufferNexter(buf);
 
       (b).should.be.an.instanceof(BufferNexter);
     });
+
+    it('should not throw if given a String', () => {
+      (function() { new BufferNexter('foo\nbar'); }).should.not.throw();
+    });
+
+    it('should not throw if given a Buffer', () => {
+      (function() { new BufferNexter(new Buffer('foo\nbar')); }).should.not.throw();
+    });
+
+    it('should throw if given a non-String/Buffer', () => {
+      (function() { new BufferNexter(1); }).should.throw();
+    });
+
+  });
+
+
+  describe('readFile', () => {
+
+    it('should read a file and make it nextable', (done) => {
+      BufferNexter.readFile(__dirname + '/sample.txt')
+        .then((b) => {
+          (b.next()).should.eql('foo');
+          (b.next()).should.eql('bar');
+          done();
+        })
+        .catch(done);
+    });
+
+    it('should read a file and make it nextable with options', (done) => {
+      BufferNexter.readFile(__dirname + '/sample.csv', { separator: ',' })
+        .then((b) => {
+          (b.next()).should.eql('foo');
+          (b.next()).should.eql('bar');
+          done();
+        })
+        .catch(done);
+    });
+
   });
 
 

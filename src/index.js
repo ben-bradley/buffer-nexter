@@ -1,9 +1,14 @@
 'use strict';
 
 import { Readable } from 'stream';
+import { isString, isBuffer } from 'util';
+import { readFile } from 'fs';
 
 export default class BufferNexter {
   constructor(buf, options = {}) {
+    if (!isBuffer(buf) && !isString(buf))
+      throw new Error('First argument must be a Buffer or String');
+
     let {
       separator = '\n',
       index = 0,
@@ -55,6 +60,17 @@ export default class BufferNexter {
 
         this.push(null);
       }
+    });
+  }
+
+  static readFile(file, options) {
+    return new Promise((resolve, reject) => {
+      readFile(file, (err, buf) => {
+        if (err)
+          return reject(err);
+
+        resolve(new BufferNexter(buf, options));
+      });
     });
   }
 }

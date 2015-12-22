@@ -22,10 +22,48 @@ describe('Buffer Nexter', function () {
   });
 
   describe('Class', function () {
+
     it('should return an instance', function () {
       var b = new _2['default'](buf);
 
       b.should.be.an['instanceof'](_2['default']);
+    });
+
+    it('should not throw if given a String', function () {
+      (function () {
+        new _2['default']('foo\nbar');
+      }).should.not['throw']();
+    });
+
+    it('should not throw if given a Buffer', function () {
+      (function () {
+        new _2['default'](new Buffer('foo\nbar'));
+      }).should.not['throw']();
+    });
+
+    it('should throw if given a non-String/Buffer', function () {
+      (function () {
+        new _2['default'](1);
+      }).should['throw']();
+    });
+  });
+
+  describe('readFile', function () {
+
+    it('should read a file and make it nextable', function (done) {
+      _2['default'].readFile(__dirname + '/sample.txt').then(function (b) {
+        b.next().should.eql('foo');
+        b.next().should.eql('bar');
+        done();
+      })['catch'](done);
+    });
+
+    it('should read a file and make it nextable with options', function (done) {
+      _2['default'].readFile(__dirname + '/sample.csv', { separator: ',' }).then(function (b) {
+        b.next().should.eql('foo');
+        b.next().should.eql('bar');
+        done();
+      })['catch'](done);
     });
   });
 
