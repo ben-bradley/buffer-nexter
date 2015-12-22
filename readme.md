@@ -119,7 +119,13 @@ readFile('sample.csv', { separator: ',' })
 
 What about `readFileSync()`?  If there's a demand for it or if someone submits a PR, I'll add it, but I prefer to use `Promise`s wherever possible.
 
+
 ## Versions
 
 - 0.1.0 - 20151222 - Added `static readFile()`
 - 0.0.1 - 20151221 - Initial release
+
+
+## Credits
+
+- Mark - Thanks for the encouragement!
