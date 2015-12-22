@@ -1,4 +1,4 @@
-# Buffer Nexter
+# Buffer Nexter [![Build Status](https://secure.travis-ci.org/ben-bradley/buffer-nexter.png)](http://travis-ci.org/ben-bradley/buffer-nexter)
 
 
 ## About
