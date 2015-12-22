@@ -4,6 +4,11 @@ import { Readable } from 'stream';
 import { isString, isBuffer } from 'util';
 import { readFile } from 'fs';
 
+const [ major, minor, patch ] = process.versions.node.split('.').map(Number);
+
+if (major === 0)
+  throw new Error('Sorry, BufferNexter requires node version >0.12');
+
 export default class BufferNexter {
   constructor(buf, options = {}) {
     if (!isBuffer(buf) && !isString(buf))
